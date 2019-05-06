@@ -94,11 +94,12 @@ int main() {
 
           // Previous path point size
           int prev_size = previous_path_x.size();
-
-          json msgJson;
-
           vector<double> next_x_vals;
           vector<double> next_y_vals;
+
+          if (prev_size > 0) {
+            car_s = end_path_s;
+          }
 
           // Prediction: Where will the cars around us be in the future?
           bool car_ahead = false;
@@ -170,10 +171,6 @@ int main() {
           double ref_x = car_x;
           double ref_y = car_y;
           double ref_yaw = deg2rad(car_yaw);
-
-          if (prev_size > 0) {
-            car_s = end_path_s;
-          }
 
           // Smoothen the path by setting the two first points of the trajectory
           // to the previous two x and y coordinates
@@ -261,6 +258,7 @@ int main() {
             next_y_vals.push_back(y_point);
           }
 
+          json msgJson;
           msgJson["next_x"] = next_x_vals;
           msgJson["next_y"] = next_y_vals;
 
